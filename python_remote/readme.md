@@ -12,6 +12,7 @@
     - CoppeliaSim (testado na versão Edu);
     - simZMQ; (Plugin do ZeroMQ para Coppelia, já vem instalado por padrão.)
 
+OBS.: configurações gerais do Coppelia para Python podem precisar que você defina o `defaultPython` no arquivo `usrset.txt` na raíz da pasta do Coppelia e que instale algumas dependências. Assegure-se de ler todas as mensagens do console durante a inicialização (lá no início foi onde apareceram para mim nesses dois problemas).
 ## Configuração inicial:
 
 ### Servidor:
@@ -31,3 +32,9 @@ Note que o servidor não é um servidor para a simulação, mas sim um servidor 
 
 
 Para o cliente, assumindo que você já tenha a base do código, os passos se resumem a obter o ip e porta do servidor e usá-los na instanciação de RemoteAPIClient.
+
+A API remota e a normal são muitíssimo semelhantes aos scripts globais (nível de sandbox ou plugin). Caso troque cenas, entretanto, o servidor ZMQ é reiniciado. A requisição de módulos do Coppelia ainda é por require e não tem IntelliSense. O PWD/CWD é o diretório raíz do coppelia ("<path normal de arquivos>/CoppeliaRobotics/CoppeliaSimEdu" no Windows ou na pasta extraída do .tar.xz no Linux).
+
+Como a API é remota, é inevitável o delay entre simulação e programa. Para evitar isso, considere fazer a simulação por passos ao invés de tempo real (sim.set)
+
+O `exemplo_zeromq.py` faz conexão, setup da cena e simulação de um robô de duas rodas diferencial caminhando em 8.
