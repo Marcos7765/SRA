@@ -33,8 +33,13 @@ Note que o servidor não é um servidor para a simulação, mas sim um servidor 
 
 Para o cliente, assumindo que você já tenha a base do código, os passos se resumem a obter o ip e porta do servidor e usá-los na instanciação de RemoteAPIClient.
 
-A API remota e a normal são muitíssimo semelhantes aos scripts globais (nível de sandbox ou plugin). Caso troque cenas, entretanto, o servidor ZMQ é reiniciado. A requisição de módulos do Coppelia ainda é por require e não tem IntelliSense. O PWD/CWD é o diretório raíz do coppelia ("<path normal de arquivos>/CoppeliaRobotics/CoppeliaSimEdu" no Windows ou na pasta extraída do .tar.xz no Linux).
+A API remota é muitíssimo semelhante aos scripts globais (nível de sandbox ou plugin). A requisição de módulos do Coppelia ainda é por require e não tem IntelliSense. O PWD/CWD é o diretório raíz do coppelia ("<path normal de arquivos>/CoppeliaRobotics/CoppeliaSimEdu" no Windows ou na pasta extraída do .tar.xz no Linux).
 
-Como a API é remota, é inevitável o delay entre simulação e programa. Para evitar isso, considere fazer a simulação por passos ao invés de tempo real (sim.set)
+Como a API é remota, é inevitável o delay entre simulação e programa. Para evitar isso, considere fazer a simulação por passos ao invés de tempo real (sim.setStepping() e sim.step())
 
 O `exemplo_zeromq.py` faz conexão, setup da cena e simulação de um robô de duas rodas diferencial caminhando em 8.
+
+## Links úteis
+- Exemplos para uso da API remota em Python: https://github.com/CoppeliaRobotics/zmqRemoteApi/tree/master/clients/python
+- Referência a API padrão: https://manual.coppeliarobotics.com/en/apiFunctions.htm
+- Manual: https://manual.coppeliarobotics.com/index.html (veja a seção Writing code)
