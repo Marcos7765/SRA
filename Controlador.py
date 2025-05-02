@@ -2,6 +2,16 @@ from typing import *
 import inspect
 
 class ControladorPID:
+    entrada:float
+    referencia:float
+    __k_p:float
+    __k_d:float
+    __k_i:float
+    __dt:float
+    erros:List[float]
+    saidas:List[float]
+    termos:List[float]
+
     def __init__(self, entrada:float, referencia:float, k_p:float, k_d:float, k_i:float, dt:float) -> None: ...
     def set_parametros(self, k_p:Optional[float] = None, k_i:Optional[float] = None, k_d:Optional[float] = None,
         dt:Optional[float] = None) -> None: ...
@@ -11,8 +21,8 @@ class ControladorPID:
 
     def __init__(self, entrada:float, referencia:float, k_p:float, k_d:float, k_i:float, dt:float) -> None:
         
-        self.entrada = entrada
-        self.referencia = referencia
+        self.entrada:float = entrada
+        self.referencia:float = referencia
         self.__k_p:float = k_p
         self.__k_d:float = k_d
         self.__k_i:float = k_i
@@ -42,6 +52,7 @@ class ControladorPID:
         self.erros[1:] = self.erros[:-1]
         self.saidas[1:] = self.saidas[:-1]
         self.erros[0] = self.referencia - self.entrada
-        self.saidas[0] = self.saidas[1] + self.termos[0]*self.erros[0] + self.termos[1]*self.erros[1] + self.termos[2]*self.erros[2] #se eu tivesse usado o numpy nn teria essa bagunça
+        self.saidas[0] = self.saidas[1] + self.termos[0]*self.erros[0] + self.termos[1]*self.erros[1] + \
+            self.termos[2]*self.erros[2] #se eu tivesse usado o numpy nn teria essa bagunça
 
         return self.saidas[0]
