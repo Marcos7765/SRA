@@ -24,8 +24,7 @@ Note que o servidor não é um servidor para a simulação, mas sim um servidor 
 1. Verifique se o servidor remoto em ZeroMQ inicializou automaticamente:
     - Procure no console (abaixo da tela cena) por uma mensagem como `[Connectivity >> ZMQ remote API server@addOnScript:info] ZeroMQ Remote API server starting (rpcPort=23000)..."`;
     - Se não estiver inicializado, selecione `Modules->Connectivity->ZMQ remote API server` no menu do canto superior esquerdo;
-    - Caso não esta opção não esteja disponível, provavelmente é sinal de que o simZMQ não está instalado.
-    - (opcional) configurações do 
+    - Caso esta opção não esteja disponível, provavelmente é sinal de que o simZMQ não está instalado.
 1. Garanta comunicação do Coppelia pelo firewall (dependente do sistema e da rede em que o cliente está)
 1. (Opcional) carregue a cena que deseja ser simulada
     - Você pode navegar pelo simulador usando somente a API remota se quiser.
