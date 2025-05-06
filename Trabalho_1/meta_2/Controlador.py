@@ -36,7 +36,7 @@ class ControladorPID:
     def set_parametros(self, k_p:Optional[float] = None, k_i:Optional[float] = None, k_d:Optional[float] = None,
         dt:Optional[float] = None):
         #aqui foi tempinho de pesquisa pra algo que era umas 4 linhas + 4 ctrl+c ctrl+v
-        for nome, _ in inspect.signature(self.set_parametros).parameters.items():
+        for nome in inspect.signature(self.set_parametros).parameters:
             if locals()[nome] is None:
                 continue
             setattr(self, f"_{self.__class__.__name__}__{nome}", locals()[nome])
