@@ -122,8 +122,6 @@ def rectangle_poly_to_obst(robot_vertices, rect_vertices):
                 new_vertices.extend(
                     [dist_vec(robot_vertices[i2],rect_vertices[j_b]),
                         dist_vec(robot_vertices[(i2+1)%len(robot_vertices)],rect_vertices[(j_b+1)%len(rect_vertices)])
-                        #[robot_vertices[(i+1)%len(robot_vertices)][0] + rect_vertices[(j2+1)%len(rect_vertices)][0],
-                            #robot_vertices[(i+1)%len(robot_vertices)][1] + rect_vertices[(j2+1)%len(rect_vertices)][1]]
                     ]
                 )
                 continue
@@ -139,8 +137,11 @@ def plot_rectangle(ax, vertices, edgecolor='black', facecolor='lightgray', label
         xs, ys = zip(*vertices)
         ax.plot(xs, ys, 'o', color=edgecolor, markersize=5)  # 'o' para marcar os pontos dos vértices
 
-def plot_environment(obstacles, robot_rect, title="Ambiente no CoppeliaSim"):
-    fig, ax = plt.subplots()
+def plot_environment(obstacles, robot_rect, title="Ambiente no CoppeliaSim", _ax=None):
+    if _ax is None:
+        fig, ax = plt.subplots()
+    else:
+        ax = _ax
     ax.set_aspect('equal')
 
 
@@ -152,14 +153,11 @@ def plot_environment(obstacles, robot_rect, title="Ambiente no CoppeliaSim"):
 
 
     all_points = [pt for rect in obstacles + [robot_rect] for pt in rect]
-    xs, ys = zip(*all_points)
-    ax.set_xlim(min(xs) - 0.5, max(xs) + 0.5)
-    ax.set_ylim(min(ys) - 0.5, max(ys) + 0.5)
 
     plt.title(title)
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.grid(True)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.grid(True)
     ax.legend()
     plt.show(block=False)
 
@@ -206,54 +204,3 @@ def plot_both_environments(sim, obstacles_real, obstacles_inflated, robot_rect, 
 
     plt.tight_layout()
     plt.show()
-
-'''
-def get_map(sim, pioneer_handle, goal_handle non_obstacle_list):
-    # Inicializar lista de retângulos
-    rectangles = []
-
-    # Obter a posição do Pioneer e do Goal
-    pioneer_pos = sim.getObjectPosition(pioneer_handle)
-
-
-    goal_pos = sim.getObjectPosition(goal_handle)
-
-    # Obter todos os objetos na simulação
-    objects = sim.GetObjects( sim.sim_handle_all)
-        print('Número de objetos na simulação:', len(objects))
-
-        for obj in objects:
-            # Ignorar o robô e o destino
-            if obj in [pioneer_handle, goal_handle]:
-                continue
-
-            # Obter a posição do objeto
-            position = sim.GetObjectPosition( obj, -1)
-
-                # Obter as dimensões do objeto
-                width, height = self.get_object_bounding_box(obj)
-                if (width is not None and width > 0.1) and (height is not None and height > 0.1):
-                    # print(f'Dimensões do objeto {obj} - Largura: {width}, Altura: {height}')
-
-                    # Filtrar objetos que podem ser quadrantes indesejados
-                    if width > 2 and height > 2:  # Ajuste os critérios conforme necessário
-                        print(f'Ignorando o objeto {obj} por ser um quadrante indesejado')
-                        continue
-
-                    # Verificar se o objeto está dentro da área ao redor do Pioneer e do Goal
-                    if (self.is_within_area(position[0], position[1], pioneer_pos[0], pioneer_pos[1], 1) or
-                            self.is_within_area(position[0], position[1], goal_pos[0], goal_pos[1], 1)):
-                        print(f'Ignorando o objeto {obj} por estar dentro da área ao redor do Pioneer ou Goal')
-                        continue
-
-                    # Adicionar retângulo à lista (x, y, largura, altura)
-                    rectangles.append((position[0], position[1], width, height))
-                else:
-                    print(f'Erro ao obter as dimensões do objeto {obj}')
-            else:
-                print(f'Erro ao obter a posição do objeto {obj}')
-    else:
-        print('Erro ao obter objetos:')
-
-    self.map = rectangles.copy()
-'''
